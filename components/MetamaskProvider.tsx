@@ -20,7 +20,7 @@ export const MetamaskProvider: FC = ({ children }: PropsWithChildren) => {
 
 
     const init = async (): Promise<void> =>  {
-        if (window.ethereum && window.ethereum.isMetaMask) {
+        if (window.ethereum as Window && window.ethereum.isMetaMask as Window) {
             try {
                 const accounts = await window.ethereum.request({ method: 'eth_accounts' })
 
@@ -48,7 +48,7 @@ export const MetamaskProvider: FC = ({ children }: PropsWithChildren) => {
             })
         } catch (err) {
             if(err?.code === 4902) {
-                const chain = CHAINS.find(chain => chain.chainId === chainId)
+                const chain = CHAINS.find(chain => chain.chainId === +chainId)
 
                 await window.ethereum?.request({
                     method: 'wallet_addEthereumChain',
@@ -76,7 +76,7 @@ export const MetamaskProvider: FC = ({ children }: PropsWithChildren) => {
     const handleAccountsChange = accounts => setAccounts(accounts)
 
     useEffect(() => {
-        init()
+        window && init()
 
         provider?.on('chainChanged', handleChainChange)
 
