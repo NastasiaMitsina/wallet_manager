@@ -36,7 +36,6 @@ const Metamask: FC = (): ReactElement => {
             const balance = await contract.balanceOf(userAccount?.address)
 
             const balanceNumber = formatUnits(balance.toString(), 18)
-            console.log(balanceNumber)
         } catch (err){
             console.warn(err)
         }
